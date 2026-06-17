@@ -23,7 +23,7 @@ Evidence: https://app.usebubbles.com/ve6B2weZaKWA9YkTnE4ftH/image-jun-17-2026
 
 2. Which of the 7 Testing Principles It Relates To
 Principle: Testing Shows Presence of Defects (not Absence)
-This bug directly shows why testing shows presence of defects, not absence. The happy-path test submitting a real, well-formed URL like https://academy.hubspot.com/certificate/abc — passes cleanly. If testing had stopped there, the feature would appear correct. It was only by testing a near-miss invalid input (a string that starts with a valid protocol but is not a real URL) that the defect surfaced.
+This bug directly shows why testing shows presence of defects, not absence. The happy-path test submitting a real, well-formed URL like https://academy.hubspot.com/certificate/abc passes cleanly. If testing had stopped there, the feature would appear correct. It was only by testing a near-miss invalid input (a string that starts with a valid protocol but is not a real URL) that the defect surfaced.
 It also connects to the principle of Exhaustive Testing is Impossible. No team will test every string a user might type into a URL field. That is precisely why boundary and equivalence partitioning techniques exist,      to deliberately target the edges (valid-looking but malformed inputs) without testing everything. 'https://,' sits exactly on that boundary: it begins like a URL, so a naive regex or starts-with check passes it through, but it resolves to nothing and is meaningless as a certificate link.
 The practical lesson: passing the happy path gives false confidence. The defect is not in the obvious failure case (typing 'hello'); it is in the near-valid case that slips past weak validation.
 3. Which SDLC Stage Could Have Caught It
@@ -34,7 +34,7 @@ It could also have been caught in the QA / Test stage if the test plan for the L
 Answer: Dynamic Testing Found It — Static Review Could Have Tightened the Spec
 Dynamic testing found this bug. I had to open the live app, type an actual input, click the button, and observe the result. No amount of reading the spec would have reproduced the behaviour  the spec just says 'invalid URL shows inline error' without specifying what the validation logic should cover.
 
-That said, static testing had a role to play upstream. If a QA engineer had reviewed the spec at the design stage and flagged: 'the spec says invalid URL but does not define the validation rules — does https://OK? Does https://,? Does a URL with no TLD?' — the developer would have been given a precise definition to implement against. The ambiguity in the spec is what allowed weak validation to be written in the first place.
+That said, static testing had a role to play upstream. If a QA engineer had reviewed the spec at the design stage and flagged: 'the spec says invalid URL but does not define the validation rules — does https://OK? Does https://,? Does a URL with no TLD?'  the developer would have been given a precise definition to implement against. The ambiguity in the spec is what allowed weak validation to be written in the first place.
 
 So: static testing would not have found this bug directly, but it could have prevented the condition that caused it. Dynamic testing is what actually exposed it.
 
@@ -188,7 +188,7 @@ Sprint: Bubbles Playwright Automation — Channel Flows & Recording Options
 
 
 When Did QA Actually Get Involved?
-QA got involved after development was already complete — and in several cases after the feature had been live in production for some time. When I started writing Playwright tests for the Bubbles app, there was no spec to test against. The live app was the spec. That means any bugs I found during automation had already been visible to real users — we had simply not formally caught or documented them yet.
+QA got involved after development was already complete  and in several cases after the feature had been live in production for some time. When I started writing Playwright tests for the Bubbles app, there was no spec to test against. The live app was the spec. That means any bugs I found during automation had already been visible to real users  we had simply not formally caught or documented them yet.
 
 For the Channel flows (create, rename, delete) and the Recording Options flows, test design started purely in response mode: I opened the app, observed what it did, and wrote tests to match observed behaviour. This is the opposite of shift-left. QA was not in the room when requirements were written, not in planning when stories were estimated, and not consulted on what 'done' meant before development started.
 
@@ -197,9 +197,9 @@ One Real Example Each of QA, QC, and Testing
 QA — Prevention
 When writing the Channel rename/delete spec, I noticed early on that the styled-component class names Bubbles generates change on every build. Before writing a single assertion, I made the deliberate decision to use wildcard attribute selectors and placeholder-based locators instead of class names. This is quality assurance: I identified a structural risk before the test was written and the decision prevented an entire category of brittle failures from ever existing. The tests never broke because of a build-time class name change.
 QC — Finding a Problem
-While testing the auth flow, the Continue with Email button stayed disabled even after a valid email address was typed into the field. I reproduced it consistently: the button only enabled after the input lost focus (blur event). This was a React form validation timing issue — the component state was not updating on each keystroke, only on blur. I found this through active exploratory testing, documented it with exact reproduction steps, and identified the fix: use .fill() + .blur() or pressSequentially() + .blur() in Playwright. That is QC: finding a real defect in an existing shipped feature.
+While testing the auth flow, the Continue with Email button stayed disabled even after a valid email address was typed into the field. I reproduced it consistently: the button only enabled after the input lost focus (blur event). This was a React form validation timing issue the component state was not updating on each keystroke, only on blur. I found this through active exploratory testing, documented it with exact reproduction steps, and identified the fix: use .fill() + .blur() or pressSequentially() + .blur() in Playwright. That is QC: finding a real defect in an existing shipped feature.
 Testing — Running a Test
-Running the bubblesRecordingOptions.spec.ts suite against the live app is the clearest example of testing in the literal sense. The suite has structured test cases with defined steps and expected outcomes. Each run produces a pass or fail result against a specific assertion. The current known failure is the Delete bubble modal not opening before the assertion fires — the test runs, it fails, it returns a specific failure message. The test is doing exactly what a test is supposed to do: providing a binary signal on whether the feature behaves as expected.
+Running the bubblesRecordingOptions.spec.ts suite against the live app is the clearest example of testing in the literal sense. The suite has structured test cases with defined steps and expected outcomes. Each run produces a pass or fail result against a specific assertion. The current known failure is the Delete bubble modal not opening before the assertion fires the test runs, it fails, it returns a specific failure message. The test is doing exactly what a test is supposed to do: providing a binary signal on whether the feature behaves as expected.
 
 
 Which Agile Ceremonies Did QA Join — and the Impact

@@ -60,14 +60,14 @@ export function getDaysRemaining(dueDate: Date, now: Date = new Date()): number 
 
 | Testing Type | Why It Matters for Login |
 |--------------|--------------------------|
-| Functional Testing | Login is a core user action — functional tests verify that correct credentials grant access and incorrect ones are rejected, ensuring the feature works as designed. |
-| Security Testing | Login handles credentials and authentication tokens, making it a prime target for attacks like brute force, credential stuffing, and session hijacking — security testing ensures these are mitigated. |
+| Functional Testing | Login is a core user action  functional tests verify that correct credentials grant access and incorrect ones are rejected, ensuring the feature works as designed. |
+| Security Testing | Login handles credentials and authentication tokens, making it a prime target for attacks like brute force, credential stuffing, and session hijacking  security testing ensures these are mitigated. |
 | Regression Testing | Any code change (new feature, dependency update) could accidentally break the login flow, so regression tests catch unintended breakage before it reaches users. |
-| Accessibility Testing | Login pages must be usable by people with disabilities — screen readers, keyboard navigation, and color contrast all matter to ensure everyone can authenticate. |
-| Performance Testing | If the login endpoint is slow under load, users experience timeouts or delays — performance tests ensure the auth system holds up during peak traffic. |
+| Accessibility Testing | Login pages must be usable by people with disabilities screen readers, keyboard navigation, and color contrast all matter to ensure everyone can authenticate. |
+| Performance Testing | If the login endpoint is slow under load, users experience timeouts or delays  performance tests ensure the auth system holds up during peak traffic. |
 
 ---
 
 ## Step 5 — Reflection
 
-Grey box testing found the most interesting issues. Reading `auth.ts` and `middleware.ts` revealed behaviours — like the automatic redirect for already-logged-in users and the role-based admin guard — that would never surface from just clicking around the UI. Black box testing is easy to start but stays shallow; you only find what a typical user might bump into. White box testing on `getDaysRemaining` was the hardest, because you have to reason through the math carefully without running the code — figuring out what `Math.ceil` does to `0` or a negative number requires real attention. Black box was the easiest but the least revealing; grey box hit the sweet spot between effort and insight for a feature like login that has real security logic underneath.
+Grey box testing found the most interesting issues. Reading `auth.ts` and `middleware.ts` revealed behaviours  like the automatic redirect for already-logged-in users and the role-based admin guard that would never surface from just clicking around the UI. Black box testing is easy to start but stays shallow; you only find what a typical user might bump into. White box testing on `getDaysRemaining` was the hardest, because you have to reason through the math carefully without running the code  figuring out what `Math.ceil` does to `0` or a negative number requires real attention. Black box was the easiest but the least revealing; grey box hit the sweet spot between effort and insight for a feature like login that has real security logic underneath.

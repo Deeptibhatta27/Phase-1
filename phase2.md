@@ -1,14 +1,8 @@
 # Day 4 — Assignment 2: Design Tests Like a Pro
-**BetaninjasSEOLMS · Task Submission Feature · Deepti · June 2026**
-
----
 
 ## Step 1 — Boundary Value Analysis
 
 ### 1A — Admin Timeline: Start Date & Due Date Fields
-Source: `/admin/timeline` · `page.tsx` (PhaseTimeline)
-Rule: `dueDate > startDate`
-
 The boundary sits where the two dates are equal. One day on either side defines all meaningful boundary values.
 
 #### Boundary Test Cases — Date Fields
@@ -212,5 +206,3 @@ TEXT and LINK tasks use all four states. Opening a task automatically triggers t
 > Each level catches different bugs. Unit catches logic errors early and cheaply. Integration catches contract mismatches between layers. System catches environment and flow issues. Acceptance catches assumption gaps — things the spec got wrong about what the user actually needs.
 
 ---
-
-*Submitted by Deepti · Day 4 Assignment 2 · June 2026*

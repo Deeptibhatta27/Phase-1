@@ -286,4 +286,4 @@ The dashboard is functionally correct for its core purpose — showing progress,
 
 ---
 
-*Submitted by Deepti · Day 4 Assignment 3 · June 2026*
+
